@@ -1,12 +1,10 @@
 package main
 
 import (
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -53,33 +51,13 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/info", basicInfo).Methods("GET")
 	r.HandleFunc("/today", deliverCurrentDay).Methods("GET")
-	certificateLoc := "cert.pem"
-	keyFile := "key.pem"
-	certificate, err := os.ReadFile(certificateLoc)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	key, err := os.ReadFile(keyFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	cert, err := tls.X509KeyPair(certificate, key)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	cfg := &tls.Config{Certificates: []tls.Certificate{cert}}
 
 	srv := &http.Server{
-		Addr:      "localhost:8000",
-		Handler:   r,
-		TLSConfig: cfg,
+		Addr:    "localhost:8000",
+		Handler: r,
 	}
-	fmt.Println("Starting https server")
-	err = srv.ListenAndServeTLS("", "")
+	fmt.Println("Starting http server")
+	err := srv.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}
