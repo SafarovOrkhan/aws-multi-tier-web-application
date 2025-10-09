@@ -1,1 +1,4 @@
 terraform/variables.tf
+terraform/.terraform/*
+terraform/.terraform.lock.hcl
+.env
