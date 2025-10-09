@@ -1,4 +1,8 @@
 terraform/variables.tf
-terraform/.terraform/*
-terraform/.terraform.lock.hcl
 .env
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/*.tfvars
+terraform/crash.log
